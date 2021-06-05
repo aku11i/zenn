@@ -1,0 +1,10 @@
+{
+  "name": "zenn",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/aktriver/zenn.git",
+  "author": "Shuhei Akutagawa <readonly@akutagawa.dev>",
+  "devDependencies": {
+    "zenn-cli": "^0.1.82"
+  }
+}
