@@ -3,7 +3,7 @@ title: "Electronで組み込み端末向けアプリケーションを開発し3
 emoji: "🤔"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["javascript", "nodejs", "electron", "windows"]
-published: false
+published: true
 ---
 
 組み込み端末のアプリケーションに [Electron](https://www.electronjs.org) を採用し開発・運用を行っています。
