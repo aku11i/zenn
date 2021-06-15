@@ -1,5 +1,5 @@
 ---
-title: "社内チャットに技術情報を流すRSSチャンネルを導入して1年間動かしてみた"
+title: "社内チャットに技術情報を流すRSSチャンネルを導入して1年が経った"
 emoji: "🗞️"
 type: "idea" # tech: 技術記事 / idea: アイデア
 topics: ["rss", "javascript", "nodejs"]
