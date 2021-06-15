@@ -1,5 +1,5 @@
 ---
-title: "社内チャットに技術情報を流すRSSチャンネルを導入して1年が経った"
+title: "社内チャットに技術情報を流すRSSチャンネルを導入して1年間動かしてみた"
 emoji: "🗞️"
 type: "idea" # tech: 技術記事 / idea: アイデア
 topics: ["rss", "javascript", "nodejs"]
@@ -13,7 +13,7 @@ published: false
 
 ![](https://storage.googleapis.com/zenn-user-upload/2136cbb4c552d3b4ce84e373.png)
 
-こんな感じです。登録しているサイトの新着記事を知らせてくれます。
+こんな感じで、登録しているサイトの新着記事を知らせてくれます。
 
 # どんな情報が流れるの？
 
