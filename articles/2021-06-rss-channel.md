@@ -11,7 +11,7 @@ published: false
 
 # どんなもの？
 
-![](https://storage.googleapis.com/zenn-user-upload/bb2c440de85da56c2acf30ff.png)
+![](https://storage.googleapis.com/zenn-user-upload/2136cbb4c552d3b4ce84e373.png)
 
 こんな感じです。登録しているサイトの新着記事を知らせてくれます。
 
