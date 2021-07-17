@@ -3,7 +3,7 @@ title: "社員の技術インプットを向上させるためにRSSチャンネ
 emoji: "🗞️"
 type: "idea" # tech: 技術記事 / idea: アイデア
 topics: ["rss", "javascript", "nodejs"]
-published: false
+published: true
 ---
 
 技術系のブログやニュースサイトの新着記事を流すチャンネルを社内チャットに作りました。
