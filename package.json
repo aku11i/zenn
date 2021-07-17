@@ -5,6 +5,9 @@
   "repository": "https://github.com/aktriver/zenn.git",
   "author": "Shuhei Akutagawa <readonly@akutagawa.dev>",
   "scripts": {
+    "zenn": "zenn",
+    "dev": "yarn preview",
+    "preview": "yarn zenn preview",
     "fix": "prettier --write --ignore-path .gitignore .",
     "prepare": "husky install"
   },
