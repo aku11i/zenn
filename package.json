@@ -15,7 +15,7 @@
     "*.{json,yml,md}": "prettier --write"
   },
   "devDependencies": {
-    "husky": "^6.0.0",
+    "husky": "^7.0.1",
     "lint-staged": "^11.0.0",
     "prettier": "^2.3.1",
     "zenn-cli": "^0.1.82"
