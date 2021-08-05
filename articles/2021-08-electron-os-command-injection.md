@@ -114,6 +114,8 @@ createButton.addEventListener("click", () => {
 
 ## メインプロセス（main.js）
 
+問題のあるコードはここです。
+
 IPC 経由で命令を受けたらディレクトリを作成します。
 
 ```javascript
