@@ -3,7 +3,7 @@ title: "ElectronでのOSコマンドインジェクションの脆弱性事例"
 emoji: "🚫"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["nodejs", "javascript", "electron"]
-published: false
+published: true
 ---
 
 プライベートで手伝っていた Electron プロジェクトで、OS コマンドインジェクションの脆弱性を発見し、指摘・修正を行いました。
