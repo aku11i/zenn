@@ -8,16 +8,16 @@ published: true
 
 プライベートで手伝っていた Electron プロジェクトで、OS コマンドインジェクションの脆弱性を発見し、指摘・修正を行いました。
 
-Electron(Node.js) のアプリケーションで、別言語で作成したモジュールを動かす時には `child_process` を使用すると思います。
+Electron(Node.js) のアプリケーションで、別言語で作成したモジュールを動かす時には `child_process` を使用することが多いと思います。
 この記事では `child_process.{exec|execSync}` を使用した際の落とし穴について、Electron での事例を紹介しながら解説します。
 
 # 要約
 
 - exec/execSync はシェルで実行されるため、外部要因に影響するコマンドを実行する場合は必ずサニタイズしなければならない
-- クロスプラットフォームで、かつユーザーの動作環境に依存する Electron の場合は OS によって使用されるシェルが変わるため、サニタイズは難しい
+- クロスプラットフォームで、かつユーザーの動作環境に依存する Electron の場合は使用されるシェルが変わるため、サニタイズは難しい
 - execFile/execFileSync はシェルに依存しないため、可能な限りこちらを使用することが望ましい
 
-# OS コマンドインジェクション
+# OS コマンドインジェクションとは
 
 > OS コマンドインジェクションは、ユーザーからデータや数値の入力を受け付けるような Web サイトなどにおいて、プログラムに与えるパラメータに OS への命令文を紛れ込ませて不正に操作する攻撃です。
 > https://www.shadan-kun.com/blog/measure/2873/
@@ -50,11 +50,11 @@ mail -s "タイトル" xxx@example.com < /etc/passwd # < /var/data/aaa.txt
 その後バージョンアップと共にセキュリティ対策が行われました。
 
 - Node Integration がデフォルトで無効となる
-  レンダラープロセスから Node.js の API にアクセスするのが難しくなりました。
-  https://www.electronjs.org/docs/tutorial/security#2-do-not-enable-nodejs-integration-for-remote-content
+  - レンダラープロセスから Node.js の API にアクセスするのが難しくなりました。
+  - https://www.electronjs.org/docs/tutorial/security#2-do-not-enable-nodejs-integration-for-remote-content
 - preload スクリプトと Context Isolation が導入される
-  Node.js の API を使った処理を安全にレンダラープロセスに渡せるようになりました。
-  https://www.electronjs.org/docs/tutorial/context-isolation#context-isolation
+  - Node.js の API を使った処理を安全にレンダラープロセスに渡せるようになりました。
+  - https://www.electronjs.org/docs/tutorial/context-isolation#context-isolation
 
 これらが実装されたことで、仮にアプリに XSS 脆弱性が存在したとしても、OS にまで影響が及ぶ可能性は少なくなりました。
 
@@ -69,17 +69,12 @@ https://github.com/aktriver/study-electron-os-command-injection
 ![](/images/2021-08-electron-os-command-injection/preview.png =600x)
 _実行画面_
 
-# 説明
-
 入力欄にディレクトリ名を入力し「CREATE」を押すと、`package.json` のあるディレクトリと同階層にディレクトリが作成されるというシンプルなものです。
-
-脆弱性の実装を行なったコミットはこちらです。
-https://github.com/aktriver/study-electron-os-command-injection/commit/f4d06fa308485693d07f10c07985180df9e0f75f
 
 # 詳細
 
-Context Isolation に則って実装を行っています。
-実装の説明を行なって行きます。
+Context Isolation に則って実装しています。
+実装の説明を行なっていきます。
 
 ## preload.js
 
@@ -132,7 +127,7 @@ ipcMain.handle("CREATE_NEW_DIRECTORY", (_event, name) => {
 
 :::message
 ディレクトリ作成であれば、API で用意されている `fs.mkdir` を使うべきですが、今回はサンプルのため `mkdir` コマンドを実行する形で進めます。
-mkdir 以外で実際に起こり得る例では、 `imagemagick` や `ffmpeg` などの外部ツールにファイル名や引数を渡すといったことがあります。
+mkdir 以外で実際に起こり得る例では、 `imagemagick` や `ffmpeg` などの実行ファイルにファイル名や引数を渡すといったことがあります。
 :::
 
 上記の実装では、`mkdir "${name}"` とダブルクオートで囲まれているので、一見安全そうに感じます。
@@ -185,7 +180,7 @@ ipcMain.handle("CREATE_NEW_DIRECTORY", (_event, name) => {
 });
 ```
 
-# exec と execFile の違い
+# exec と execFile の違いについて
 
 Node.js の公式ドキュメントから今回の説明に必要な部分を引用します。
 
