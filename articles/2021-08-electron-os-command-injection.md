@@ -9,7 +9,7 @@ published: true
 プライベートで手伝っていた Electron プロジェクトで、OS コマンドインジェクションの脆弱性を発見し、指摘・修正を行いました。
 
 Electron(Node.js) のアプリケーションで、別言語で作成したモジュールを動かす時には `child_process` を使用すると思います。
-この記事では `child_process.{exec|execSync}` を使用した際の落とし穴についての解説を、Electron での事例を紹介しながら解説します。
+この記事では `child_process.{exec|execSync}` を使用した際の落とし穴について、Electron での事例を紹介しながら解説します。
 
 # 要約
 
