@@ -2,7 +2,7 @@
 title: "ElectronでのOSコマンドインジェクションの脆弱性事例"
 emoji: "🚫"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["nodejs", "javascript", "electron"]
+topics: ["nodejs", "javascript", "electron", "security"]
 published: true
 ---
 
