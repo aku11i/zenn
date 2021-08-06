@@ -6,16 +6,16 @@ topics: ["nodejs", "javascript", "electron", "security"]
 published: true
 ---
 
-プライベートで手伝っていた Electron プロジェクトで OS コマンドインジェクションの脆弱性を発見し、指摘・修正を行いました。
+プライベートでお手伝いをしていた Electron プロジェクトで OS コマンドインジェクションの脆弱性を発見し、指摘・修正を行いました。
 
-Electron(Node.js) のアプリケーションで別言語で作成したモジュールを動かす時には `child_process` を使用することが多いと思います。
+Electron(Node.js) のアプリケーションで別言語で作成したモジュールを動かす時には、実行ファイル形式にビルドして `child_process` から呼び出すことが多いと思います。
 この記事では `child_process.{exec|execSync}` を使用した際の落とし穴について、Electron での事例を紹介しながら解説します。
 
 # 要約
 
-- exec/execSync はシェルで実行されるため、外部要因に影響するコマンドを実行する場合は必ずサニタイズしなければならない
+- `exec/execSync` はシェルで実行されるため、外部要因に影響するコマンドを実行する場合は必ずサニタイズしなければならない
 - クロスプラットフォームでかつユーザーの動作環境に依存する Electron の場合は使用されるシェルが変わるため、サニタイズは難しい
-- execFile/execFileSync はシェルに依存しないため、可能な限りこちらを使用することが望ましい
+- `execFile/execFileSync` はシェルに依存しないため、可能な限りこちらを使用することが望ましい
 
 # OS コマンドインジェクションとは
 
@@ -28,7 +28,7 @@ Web サーバーへの攻撃手法としては一般的に認知されている�
 ```javascript
 const { execSync } = require("child_process");
 
-export function sendEmail(address) {
+function sendEmail(address) {
   execSync(`mail -s "タイトル" ${address} < /var/data/aaa.txt`);
 }
 ```
@@ -45,7 +45,7 @@ mail -s "タイトル" xxx@example.com < /etc/passwd # < /var/data/aaa.txt
 
 まず、Electron のセキュリティについての歴史を簡単に説明します。
 
-バージョン 1 や 2 の頃の Electron はブラウザー側（レンダラープロセス）に Node.js の API が剥き出しの状態であるため、ひとたび XSS の攻撃を受ければユーザーの PC 全体が危険に晒されてしまう状況でした。
+バージョン 1 や 2 の頃の Electron はブラウザー側（レンダラープロセス）に Node.js の API が剥き出しの状態であるため、XSS の攻撃を受ければローカルのファイルに無制限にアクセスできるようになり、ユーザーの PC 全体が危険に晒されてしまう状況でした。
 
 その後バージョンアップと共にセキュリティ対策が行われました。
 
@@ -58,7 +58,7 @@ mail -s "タイトル" xxx@example.com < /etc/passwd # < /var/data/aaa.txt
 
 これらが実装されたことで、仮にアプリに XSS 脆弱性が存在したとしても、OS にまで影響が及ぶ可能性は少なくなりました。
 
-今回は「上記のセキュリティ対策に則って実装しているからといっても安全なアプリであるとは限らない」という話になります。
+今回は「これらのセキュリティ対策に則って実装しているからといっても安全なアプリであるとは限らない」という話になります。
 
 # Electron での事例
 
@@ -78,7 +78,7 @@ Context Isolation に則って実装しています。
 
 ## preload.js
 
-IPC 経由で命令を送信するための関数をレンダラープロセスに登録します。
+IPC 経由でメインプロセスに命令を送信するための関数をレンダラープロセスに登録します。
 レンダラープロセスからは `window.electron.createNewDirectory` でアクセスできるようになります。
 
 ```javascript
@@ -138,13 +138,13 @@ mkdir 以外で実際に起こり得る例では `imagemagick` や `ffmpeg` な�
 
 ここで攻撃が可能なディレクトリ名を入力してみます。
 
-- Mac の場合
-  - `dir2"; open . #`
-  - `$(open .; echo dir2)`
-- Windows の場合
-  - `dir2"; start . || rem "`（未確認です…）
+| OS      | ディレクトリ名                    | 展開されるコマンド             |
+| ------- | --------------------------------- | ------------------------------ |
+| Mac     | `dir2"; open . #`                 | `mkdir "dir2"; open . #"`      |
+| Mac     | `$(open .; echo dir2)`            | `mkdir "$(open .; echo dir2)"` |
+| Windows | `dir2"; start ".` （未確認です…） | `mkdir "dir2"; start "."`      |
 
-実行すると `dir2` が作成され、同時に何故か Finder/explorer.exe が開くと思います。
+いずれのコマンドも、実行すると `dir2` が作成され、同時に何故か Finder/explorer.exe が開くと思います。
 
 `execSync` に渡されたコマンドは変数が展開されて `mkdir "dir2"; open . #"` となっているからです。
 （`open .` も `start .` も現在のディレクトリを Finder/explorer.exe で開くコマンドです。）
@@ -159,7 +159,7 @@ mkdir 以外で実際に起こり得る例では `imagemagick` や `ffmpeg` な�
 
 一番正確で安全な対策は `exec/execSync` から `execFile/execFileSync` に変更することです。
 
-## before
+## 対策前
 
 ```javascript
 const { execSync } = require("child_process");
@@ -170,7 +170,7 @@ ipcMain.handle("CREATE_NEW_DIRECTORY", (_event, name) => {
 });
 ```
 
-## after
+## 対策後
 
 ```javascript
 const { execFileSync } = require("child_process");
@@ -212,16 +212,18 @@ Electron では最低でも `/bin/sh` `cmd` `powershell` での実行を考慮�
 > Since a shell is not spawned, behaviors such as I/O redirection and file globbing are not supported.
 > （シェルは生成されないため、I / O リダイレクトやファイルグロブなどの動作はサポートされていません。）
 
-`execFile` では一つ目の引数に渡した実行ファイルから直接プロセスが生成されるため、シェルの構文が挿入される危険性がありません。
+`execFile` では一つ目の引数に渡した実行ファイルから直接プロセスが生成されるため、シェルの構文が実行される危険性がありません。
 
 また、シェルで実行されないため、環境変数も展開されません。
 `execFile('mkdir', ["$HOME"])` と実行しても、`$HOME`は展開されずに文字列のまま渡されます。
 
-シンプルな 1 コマンドで完結し、引数がユーザーや外部の要因により動的に変動する場合には `execFile` を使用するのが無難です。
-また、第一引数のコマンドも、 `/bin/mkdir` と絶対パスで指定した方がより安全です。
+引数がユーザーや外部の要因により動的に変動する場合には `execFile` を使用するのが無難です。
+また、第一引数のコマンドも、 `/bin/mkdir` と絶対パスで指定した方がより安全でしょう。
 
 # 最後に
 
-exec/execFile の違いについては Node.js の話なので、Electron に限るわけではありません。
+`child_process` に依存している Electron アプリ、多いんじゃないかと思います。
 インジェクション系の脆弱性は気を抜いていると入り込んでしまうことがあるなと思いました。
+
+また、`exec/execFile` の違いについては Node.js の話なので、Electron に限るわけではありません。
 注意したいところです。
