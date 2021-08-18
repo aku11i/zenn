@@ -2,7 +2,7 @@
   "name": "zenn",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/aktriver/zenn.git",
+  "repository": "https://github.com/aku11i/zenn.git",
   "author": "Shuhei Akutagawa <readonly@akutagawa.dev>",
   "scripts": {
     "zenn": "zenn",
