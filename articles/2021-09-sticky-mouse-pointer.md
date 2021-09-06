@@ -264,7 +264,7 @@ import gsap from "gsap";
 -    pointer.style.width = width + "px";
 -    pointer.style.height = height + "px";
 -    pointer.style.borderRadius = borderRadius + "px";
-+    gsap.to({
++    gsap.to(pointer, {
 +      top,
 +      left,
 +      width,
@@ -278,7 +278,7 @@ import gsap from "gsap";
 -    pointer.style.width = "20px";
 -    pointer.style.height = "20px";
 -    pointer.style.borderRadius = "50%";
-+    gsap.to({
++    gsap.to(pointer, {
 +      width: 20,
 +      height: 20,
 +      borderRadius: "50%",
@@ -289,7 +289,7 @@ import gsap from "gsap";
     // マウス座標に移動させる
 -    pointer.style.top = pageY + "px";
 -    pointer.style.left = pageX + "px";
-+    gsap.to({
++    gsap.to(pointer, {
 +      top: pageY,
 +      left: pageX,
 +      duration: 0.05,
@@ -323,7 +323,7 @@ import gsap from "gsap";
 GSAP でポインターの移動に対してもアニメーションを適用しているためです。
 
 ```javascript
-gsap.to({
+gsap.to(pointer, {
   top: pageY,
   left: pageX,
   duration: 0.05,
