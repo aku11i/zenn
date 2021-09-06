@@ -14,7 +14,7 @@ published: false
 
 https://twitter.com/aku11i/status/1430803913876271109
 
-この記事では上記ツイートの動画と同じポインターの実装手順を紹介します。
+この記事では上記ツイートの動画と同じ動作をするポインターの実装手順を紹介します。
 
 :::message
 ライブラリとしても公開しています。
@@ -150,6 +150,8 @@ window.addEventListener("mousemove", (event) => {
 
 ボタンの上にポインターを移動させると対象の要素と同じ大きさに変形し、ぴったりと固定されるようになりました。
 
+ここまでの実装を解説していきます。
+
 ## マウス下の要素の取得について
 
 マウスと同じ座標にある要素を取得するために [`document.elementsFromPoint`](https://developer.mozilla.org/ja/docs/Web/API/Document/elementsFromPoint) を使用しています。
@@ -221,9 +223,9 @@ pointer.style.left = pageX + "px";
 「貼り付く」から「吸い付く」ような表現になるようにアニメーションを導入していきます。
 
 今回、アニメーションは CSS ではなく JavaScript で実装していきます。
-理由は CSS で試してみたところ、ブラウザーによって期待通りの動作にならないことがあったためです。[^1]
+理由は CSS で試してみたところ、ブラウザーによって期待通りの動作にならないことがあったためです。
 
-[^1]: 例えば[この例](https://codepen.io/ddryo-the-encoder/pen/BaBYZdW)を Safari で動かすとポインターの移動がぎこちなくなる
+例えば [この例(検索でヒットしたものを拝借)](https://codepen.io/ddryo-the-encoder/pen/BaBYZdW) は CSS アニメーションで実装されており、Chrome では問題なく動作していますが、 Safari で確認するとポインターの移動がスムーズではありません。
 
 # GSAP をインストールする
 
@@ -307,7 +309,7 @@ import gsap from "gsap";
 # デフォルトのマウスカーソルを隠す
 
 （お好みで）OS デフォルトのマウスカーソルを非表示にします。
-全ての要素に対してマウスカーソルを非表示にするスタイルを適用します。
+全ての要素に対してマウスカーソルを非表示にするスタイルを CSS に記述します。
 
 ```css
 * {
