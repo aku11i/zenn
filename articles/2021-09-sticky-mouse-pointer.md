@@ -329,8 +329,11 @@ import gsap, { Power2 } from "gsap";
 ```
 
 ```diff javascript
+gsap.to(pointer, {
+  // ...
   duration: 0.1,
 +  ease: Power2.easeOut,
+})
 ```
 
 アニメーションを確認すると少し吸い付き方に変化が表れていると思います。（見比べないと分からないかも…）
