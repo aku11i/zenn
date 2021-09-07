@@ -141,6 +141,9 @@ window.addEventListener("mousemove", (event) => {
     border-width: 0px;
     background-color: transparent;
     margin: 5px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
   }
 </style>
 ```
