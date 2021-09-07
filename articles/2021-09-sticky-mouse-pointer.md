@@ -3,7 +3,7 @@ title: "ボタンに吸い付くマウスポインターを実装してみる"
 emoji: "😚"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["javascript", "html", "css"]
-published: false
+published: true
 ---
 
 もう 1 年半ほど前になりますが、 iPad OS 13.4 からマウスなどのポインティングデバイスがサポートされ、接続した時にポインターが表示されるようになりました。
