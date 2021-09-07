@@ -1,5 +1,5 @@
 ---
-title: "ボタンに吸い付くポインターを実装してみる（JavaScript）"
+title: "ボタンに吸い付くマウスポインターを実装してみる"
 emoji: "😚"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["javascript", "html", "css"]
