@@ -311,8 +311,9 @@ GSAP でプリインストールされているイージングについては [�
 
 個人的には `Power2.easeOut` がちょうど良いかなと思いました。
 
-```javascript
-import gsap, { Power2 } from "gsap";
+```diff javascript
+-import gsap from "gsap";
++import gsap, { Power2 } from "gsap";
 ```
 
 ```diff javascript
