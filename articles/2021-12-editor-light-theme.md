@@ -20,6 +20,8 @@ published: false
 macOS の外観モード（ライト / ダーク）の設定に応じて各種開発ツールのカラースキームを変更する方法をまとめました。
 VSCode / IntelliJ に関しては Windows / Linux(GNOME) でも使えるかも知れません。
 
+## ページ内リンク
+
 - [iTerm2](https://zenn.dev/aktriver/articles/2021-12-editor-light-theme#iterm2)
 - [VSCode(Visual Studio Code)](<https://zenn.dev/aktriver/articles/2021-12-editor-light-theme#vscode(visual-studio-code)>)
 - [IntelliJ IDEA](https://zenn.dev/aktriver/articles/2021-12-editor-light-theme#intellij-idea)
