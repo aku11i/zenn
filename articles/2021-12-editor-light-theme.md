@@ -13,7 +13,7 @@ published: true
 仕事環境に応じてカラースキームを変えてみて良かったという話をします。
 「エディターのカラースキームは昔から変えていない」「ダークテーマ一択！」という方に是非見てもらいたい記事です！
 
-![](/images/2021-12-editor-light-theme/header.png)
+![editor](/images/2021-12-editor-light-theme/switch-vscode.gif)
 
 # 概要
 
@@ -62,7 +62,7 @@ OS に合わせてダークモード・ライトモードを切り替える設�
 
 # 使用しているカラースキーム：Solarized
 
-![](/images/2021-12-editor-light-theme/header.png)
+![solarized](/images/2021-12-editor-light-theme/solarized.png)
 
 私は以下の理由から [Solarized](https://ethanschoonover.com/solarized/) をメインのカラースキームとして使用しています。
 
@@ -81,19 +81,19 @@ Light の方は今まで興味ありませんでしたが、こちらも目に�
 
 ## iTerm2
 
-![](/images/2021-12-editor-light-theme/switch-iterm2.gif)
+![iterm2](/images/2021-12-editor-light-theme/switch-iterm2.gif)
 
 本記事記載時点の `iTerm2 3.4.14 (OS 10.14+)` では機能として存在しませんでした。
 Beta 版の `iTerm2 3.5.0beta3 (OS 10.14+)` では設定に "Use different colors for light mode and dark mode" という項目が追加されており、こちらで切り替えることができます。
 
-![](/images/2021-12-editor-light-theme/settings-iterm2.png)
+![iterm2 settings](/images/2021-12-editor-light-theme/settings-iterm2.png)
 
 iTerm2 のベータ版はこちらからダウンロードできます。
 https://iterm2.com/downloads.html
 
 ## VSCode(Visual Studio Code)
 
-![](/images/2021-12-editor-light-theme/switch-vscode.gif)
+![vscode](/images/2021-12-editor-light-theme/switch-vscode.gif)
 
 設定ファイル `~/Library/Application Support/Code/User/settings.json` に以下のように記述します。
 
@@ -111,15 +111,15 @@ https://marketplace.visualstudio.com/items?itemName=bbrakenhoff.solarized-light-
 
 ## IntelliJ IDEA
 
-![](/images/2021-12-editor-light-theme/switch-intellij.gif)
+![intellij idea](/images/2021-12-editor-light-theme/switch-intellij.gif)
 
 設定画面に `Sync with OS` という項目がありました。
 
-![](/images/2021-12-editor-light-theme/settings-intellij.png)
+![intellij idea settings](/images/2021-12-editor-light-theme/settings-intellij.png)
 
 ## Vim/NeoVim
 
-![](/images/2021-12-editor-light-theme/switch-neovim.gif)
+![neovim](/images/2021-12-editor-light-theme/switch-neovim.gif)
 
 こちらのみ拡張機能での対応になります。
 [vim-auto-color-switcher](https://github.com/kat0h/vim-auto-color-switcher) というプラグインがありましたのでこちらを使わせていただきました。
