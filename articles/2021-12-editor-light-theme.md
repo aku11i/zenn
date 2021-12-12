@@ -6,23 +6,24 @@ topics: ["vscode", "vim", "neovim", "intellij", "terminal"]
 published: false
 ---
 
-仕事環境に応じてカラースキームを変えてみて良かったという話をします。
-「エディターのカラースキームは昔から変えていない」「ダークテーマ一択！」という方に是非見てもらいたい記事です！
-
 :::message
 この記事は [Uzabase Advent Calendar 2021](https://qiita.com/advent-calendar/2021/uzabase) 12 日目の記事です。
 :::
+
+仕事環境に応じてカラースキームを変えてみて良かったという話をします。
+「エディターのカラースキームは昔から変えていない」「ダークテーマ一択！」という方に是非見てもらいたい記事です！
 
 ![](/images/2021-12-editor-light-theme/header.png)
 
 # 概要
 
 macOS の外観モード（ライト / ダーク）の設定に応じて各種開発ツールのカラースキームを変更する方法をまとめました。
+VSCode / IntelliJ に関しては Windows / Linux(GNOME) でも使えるかも知れません。
 
-- iTerm2
-- VSCode
-- IntelliJ IDEA
-- Vim/NeoVim
+- [iTerm2](https://zenn.dev/aktriver/articles/2021-12-editor-light-theme#iterm2)
+- [VSCode(Visual Studio Code)](<https://zenn.dev/aktriver/articles/2021-12-editor-light-theme#vscode(visual-studio-code)>)
+- [IntelliJ IDEA](https://zenn.dev/aktriver/articles/2021-12-editor-light-theme#intellij-idea)
+- [Vim/Neovim](https://zenn.dev/aktriver/articles/2021-12-editor-light-theme#vim%2Fneovim)
 
 # 経緯
 
@@ -51,7 +52,7 @@ macOS の外観モード（ライト / ダーク）の設定に応じて各種�
 とはいえ夜になり部屋の明るさが下がってきた時にライトモードの明るい背景は目に刺激的です。
 macOS には日の出・日の入りに応じて OS のダークモード・ライトモードの設定を自動的に変更する機能がありますので、これに応じてエディタや開発ツールのカラースキームも変更されるようにしました。
 
-OS に合わせてダーク・ライトを切り替える設定はデフォルトでは有効になっていないことが多いです。
+OS に合わせてダークモード・ライトモードを切り替える設定はデフォルトでは有効になっていないことが多いです。
 自分の使用している主要な開発ツールでの設定方法を調べたので他の方にも設定してみて欲しくまとめました。
 
 [^1]: 使用しているモニターディスプレイの最大輝度は 350 ニトでした
@@ -86,7 +87,7 @@ Beta 版の `iTerm2 3.5.0beta3 (OS 10.14+)` では設定に "Use different color
 iTerm2 のベータ版はこちらからダウンロードできます。
 https://iterm2.com/downloads.html
 
-## VSCode
+## VSCode(Visual Studio Code)
 
 ![](/images/2021-12-editor-light-theme/switch-vscode.gif)
 
@@ -143,6 +144,6 @@ https://github.com/aku11i/dotfiles/blob/master/.config/nvim/init.vim
 
 # 最後に
 
-各種開発ツールでのライト/ダークテーマの切り替えを紹介しました。
+各種開発ツールで OS の設定に合わせてカラースキームの切り替えを行う方法を紹介しました。
 エディターのカラースキームは今回のように眼精疲労に影響したりすることもありますし、好みのカラースキームだとコーディングの調子が上がって生産性の向上にも幾分か効果が見られると思います。
 年末休暇も近づいていますし、皆さんもこの機会にパフォーマンスの出せるテーマ・カラースキームの設定を考えてみてください！
