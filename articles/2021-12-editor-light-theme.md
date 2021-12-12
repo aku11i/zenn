@@ -132,9 +132,6 @@ https://zenn.dev/kato_k/articles/3f1abb1f83419e
 ただ、内部で使われている API が NeoVim と互換性がないようで少し調整を行う必要がありました。
 
 ```diff:vim-auto-color-switcher/plugin/auto_color_switcher.vim
--  if a:msg == "light"
-+  if a:msg == "Light"
-
 -let s:job = job_start(s:exe, {"out_cb": function('s:CallBack')})
 +let s:job = jobstart(s:exe, {"on_stdout": {j,d -> s:CallBack(j, d[0])}})
 ```
