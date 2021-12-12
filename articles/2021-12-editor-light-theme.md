@@ -1,5 +1,5 @@
 ---
-title: "ライトテーマのすすめ　OS設定に合わせてカラースキームを切り替える"
+title: "ライトテーマのすすめ OS設定に合わせてカラースキームを切り替える"
 emoji: "🌞"
 type: "idea" # tech: 技術記事 / idea: アイデア
 topics: ["vscode", "vim", "neovim", "intellij", "terminal"]
