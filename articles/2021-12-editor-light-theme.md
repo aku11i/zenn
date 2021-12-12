@@ -3,7 +3,7 @@ title: "ライトテーマのすすめ　OS設定に合わせてカラースキ�
 emoji: "🌞"
 type: "idea" # tech: 技術記事 / idea: アイデア
 topics: ["vscode", "vim", "neovim", "intellij", "terminal"]
-published: false
+published: true
 ---
 
 :::message
@@ -61,6 +61,8 @@ OS に合わせてダークモード・ライトモードを切り替える設�
 [^2]: Web ページも Chrome 拡張機能の Dark Reader を使ってダークモードにしているほどです。
 
 # 使用しているカラースキーム：Solarized
+
+![](/images/2021-12-editor-light-theme/header.png)
 
 私は以下の理由から [Solarized](https://ethanschoonover.com/solarized/) をメインのカラースキームとして使用しています。
 
@@ -141,8 +143,6 @@ https://zenn.dev/kato_k/articles/3f1abb1f83419e
 
 また、 vim での Solarized プラグインは [vim-solarized8](https://github.com/lifepillar/vim-solarized8) がオススメです。
 `set background` が `light` か `dark` かでテーマの切り替えを行ってくれるので、先程のプラグインとの相性も良いです。
-私の vim の設定ファイルを貼っておきますのでよければ参考にしてみてください。
-https://github.com/aku11i/dotfiles/blob/master/.config/nvim/init.vim
 
 # 最後に
 
