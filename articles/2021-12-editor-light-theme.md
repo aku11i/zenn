@@ -129,14 +129,9 @@ https://marketplace.visualstudio.com/items?itemName=bbrakenhoff.solarized-light-
 ↓ 紹介記事
 https://zenn.dev/kato_k/articles/3f1abb1f83419e
 
-ただ、内部で使われている API が NeoVim と互換性がないようで少し調整を行う必要がありました。
-
-```diff:vim-auto-color-switcher/plugin/auto_color_switcher.vim
--let s:job = job_start(s:exe, {"out_cb": function('s:CallBack')})
-+let s:job = jobstart(s:exe, {"on_stdout": {j,d -> s:CallBack(j, d[0])}})
-```
-
-こちらに関してまた PR を出したいと考えています。
+~~ただ、内部で使われている API が NeoVim と互換性がないようで少し調整を行う必要がありました。~~
+~~こちらに関してまた PR を出したいと考えています。~~
+追記：PR がマージされて NeoVim でも動作するようになりました 🎉
 
 また、 vim での Solarized プラグインは [vim-solarized8](https://github.com/lifepillar/vim-solarized8) がオススメです。
 `set background` が `light` か `dark` かでテーマの切り替えを行ってくれるので、先程のプラグインとの相性も良いです。
