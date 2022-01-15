@@ -3,7 +3,7 @@ title: "Reactコンポーネントを手続き的に呼び出す"
 emoji: "✍️"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["react", "javascript", "typescript"]
-published: false
+published: true
 ---
 
 React で手続き的にコンポーネントを呼び出す仕組みを作ってみました。
