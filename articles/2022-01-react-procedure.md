@@ -222,9 +222,9 @@ const handleClickDelete = async () => {
 
 # 注意点
 
-今回の実装では `handleClickDelete` 関数の中で `renderComponent`(React.createElement) を実行しています。
+今回の実装では `handleClickDelete` 関数の中で `renderComponent`(`React.createElement`) を実行しています。
 ここで `ConfirmDialog` に渡される props はリアクティブ性が失われているので、例えば下記のように `message` をステートにしてどこかで更新されることを期待しても反映されません。
-`message` は `renderComponent` が呼び出される時点の値で確定されてしまいます。
+`message` は `renderComponent`（正確には`handleClickDelete`）が呼び出される時点の値で確定されてしまいます。
 
 ```typescript
 const [message, setMessage] = useState("");
@@ -239,7 +239,7 @@ const handleClickDelete = async () => {
 
 # 使い所
 
-個人的に思う使い所としては
+個人的に思う使い所としては、レンダリングの最中に props の変更を気にしなくて良いような
 
 - ダイアログ全般
 - アニメーションエフェクト
