@@ -254,9 +254,11 @@ const handleClickDelete = async () => {
 ↓ こんな感じです。
 
 ```tsx
-const stage1 = () => {
-  const { cleared } = await renderComponent(Stage1);
-  cleared ? stage2() : topPage();
+const stage1 = useProcedure(Stage1);
+
+const loadStage1 = () => {
+  const { cleared } = await stage1.renderComponent();
+  cleared ? loadStage2() : loadTopPage();
 };
 ```
 
