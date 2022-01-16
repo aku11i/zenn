@@ -24,6 +24,8 @@ const handleClickDelete = () => {
 <DeleteButton onClick={handleClickDelete} />;
 ```
 
+`result` でユーザーの選択した結果を受け取れるのでシンプルです。
+
 同様に「はい」「いいえ」を確認するようなダイアログを React コンポーネントで実装すると、呼び出し側の実装は下記のようになります。
 
 ```tsx
@@ -67,7 +69,8 @@ const handleClickDelete = () => {
 <DeleteButton onClick={handleClickDelete} />;
 ```
 
-上記のようにコンポーネントを手続き的にレンダリングし、Promise で結果を受け取れるようにする hook を作ってみました。
+上記のようにダイアログを表示できればユーザー操作の確認処理をシンプルに記述できるのではと考えました。
+そこでコンポーネントを手続き的にレンダリングし、Promise で結果を受け取れるようにする hook を作ってみました。
 
 # ライブラリ
 
@@ -75,13 +78,12 @@ const handleClickDelete = () => {
 
 https://github.com/aku11i/react-procedure
 
-以下で解説など行っていきます。
+README にも使い方を記載していますが、以下でもう少し詳しく解説など行っていきます。
 
 # 解説
 
 :::message
 ここで記載するコードは一部のみ記載しているので、そのままコピペするだけでは動作しません。
-予めご了承ください。
 :::
 
 今回手続き的に呼び出したい `ConfirmDialog` のインターフェースはこちらです。
@@ -167,9 +169,8 @@ Promise を使用してコールバック関数のどちらかが実行される
 こうすることで呼び出し側はとてもシンプルになります。
 
 ```tsx
-const result = await renderComponent(ConfirmDialog, {
-  message: "本当に削除しますか？",
-});
+const message = "本当に削除しますか？";
+const result = await renderComponent(ConfirmDialog, { message });
 ```
 
 また、`renderComponent` に関連する処理は hooks に切り出すことができます。
