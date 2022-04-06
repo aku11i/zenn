@@ -6,8 +6,10 @@
   "author": "Shuhei Akutagawa <readonly@akutagawa.dev>",
   "scripts": {
     "zenn": "zenn",
-    "dev": "yarn preview",
-    "preview": "yarn zenn preview",
+    "new:article": "zenn new:article",
+    "new:book": "zenn new:book",
+    "dev": "npm run preview",
+    "preview": "npm run zenn preview",
     "fix": "prettier --write --ignore-path .gitignore .",
     "prepare": "husky install"
   },
@@ -16,8 +18,8 @@
   },
   "devDependencies": {
     "husky": "^7.0.4",
-    "lint-staged": "^12.1.2",
-    "prettier": "^2.5.1",
-    "zenn-cli": "^0.1.99"
+    "lint-staged": "^12.3.7",
+    "prettier": "^2.6.2",
+    "zenn-cli": "^0.1.108"
   }
 }
