@@ -3,7 +3,7 @@ title: "Next.jsで環境変数を使いこなすための記事"
 emoji: "🧑‍🔧"
 type: "tech"
 topics: ["nextjs", "nodejs", "typescript", "react", "javascript"]
-published: false
+published: true
 ---
 
 Next.js を使うプロジェクトでの開発をいくつか経験した結果、環境変数についての知見が溜まりましたので一気に共有します！
