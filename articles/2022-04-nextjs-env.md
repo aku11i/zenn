@@ -6,7 +6,7 @@ topics: ["nextjs", "nodejs", "typescript", "react", "javascript"]
 published: false
 ---
 
-Next.js を使うプロジェクトでの開発をいくつか経験した結果、環境変数についての知見が溜まりましたので一気に共有します！
+Next.js を使うプロジェクトでの開発をいくつか経験した結果、環境変数の取り扱いについての知見が溜まりましたので共有します！
 
 :::message
 こんな読者の方を対象にしています。
@@ -15,7 +15,7 @@ Next.js を使うプロジェクトでの開発をいくつか経験した結果
 - デプロイする環境に合わせて環境変数を切り替えたい。
 - 環境変数の TypeScript 型定義が欲しい
 - 環境変数に対してテストをしたい
-- 複雑な実装や外部ライブラリの導入なしで上記を実現したい
+- 複雑な実装やライブラリの導入なしで上記を実現したい
 
 :::
 
@@ -39,7 +39,6 @@ dev-1, dev-2, staging など複数の環境を切り替えたい場合にこの�
 また、定義した環境変数が自動で TypeScript の型定義に反映されることもありません。
 
 以降の章からそんな不足している機能を補う実装を紹介します。
-なるべくシンプルになることを意識していますのでどうぞご確認ください。
 
 # その前に
 
@@ -47,8 +46,7 @@ dev-1, dev-2, staging など複数の環境を切り替えたい場合にこの�
 ビルド時に反映したい env ファイルを `.env.production` にコピーする方法です。
 https://github.com/vercel/next.js/blob/canary/examples/with-docker-multi-env/docker/staging/Dockerfile#L15-L17
 
-これで必要十分な方もいらっしゃるかも知れませんが、これから紹介する方法もオススメです。
-プロジェクト規模や各自の方針に合わせてでどこまでどう対応するか検討してみてください！
+これで必要十分な方もいらっしゃるかも知れません。プロジェクト規模や各自の方針に合わせてでどう対応するか検討してみてください。
 
 # デプロイする環境に合わせて環境変数を切り替える
 
@@ -68,7 +66,7 @@ https://github.com/vercel/next.js/blob/canary/examples/with-docker-multi-env/doc
 ディレクトリ名は `env/` 以外でも大丈夫です。
 
 環境の切り替えを確認するために staging 環境のファイルを作成してみます。
-JSON だとコメントを挿入できないので不便ですよね？ JavaScript でも作成できます！
+JSON だとコメントを挿入できないので不便ですよね？ JavaScript でも作成できます 👍
 
 ```js:env/env.staging.js
 module.exports = {
@@ -100,8 +98,6 @@ module.exports = nextConfig;
 +    NEXT_PUBLIC_APP_ENV: appEnv,
 +  };
 +
-+  console.log({ env });
-+
 +  Object.entries(env).forEach(([key, value]) => {
 +    process.env[key] = value;
 +  });
@@ -109,21 +105,17 @@ module.exports = nextConfig;
 ```
 
 これで最小限の対応は完了しました！
-環境に合わせた設定ファイルが読み込まれるようになります！
+`APP_ENV=staging yarn dev` などと環境を指定して起動することで対象の設定ファイルが読み込まれるようになります。
 
 ## 解説
 
 Next.js が起動するとまず `next.config.js` が読み込まれます。そのタイミングで `loadEnv`関数を実行して環境変数ファイルを読み込み、 `process.env` にセットしています。
 標準の `.env` の方法とほぼ同じタイミングで環境変数を読み込んでいるため、その後は `.env` でセットされた環境変数と同じように処理されます。
 
-`loadEnv` の中で `console.log` を挟んでいるのは `next dev` `next build` `next start` 時に読み込んだ環境変数を毎回コンソールに出力してもらうためです。
-コンテナログにも出力されるのでデバッグしやすくなります。
-
 受け取った `APP_ENV` は `NEXT_PUBLIC_APP_ENV` として `process.env` にセットしています。
 
-`NEXT_PUBLIC_` のプレフィックスを付けている理由はブラウザーから参照できるようにするためです。
-`.env` の方法では `NEXT_PUBLIC_` のプレフィックスが付いた環境変数しかブラウザー側に公開されないようになっています。
-これは環境変数に設定したシークレットな値が誤ってブラウザー向けのバンドル JS に混入されないようにするための[Next.js の機能](https://nextjs.org/docs/basic-features/environment-variables#exposing-environment-variables-to-the-browser)です。
+`NEXT_PUBLIC_` のプレフィックスが付いた環境変数しかブラウザー側に公開されないようになっているため、クライアント（ブラウザー）から参照したい環境変数には `NEXT_PUBLIC_` を付けます。
+これは環境変数に設定したシークレットな値が誤ってブラウザー向けのバンドル JS に混入されて流出しないようにするための[Next.js の機能](https://nextjs.org/docs/basic-features/environment-variables#exposing-environment-variables-to-the-browser)です。
 
 参照する環境変数ファイルは APP_ENV 環境変数を渡すことで切り替えられます。
 
@@ -137,9 +129,10 @@ APP_ENV=staging yarn start
 ```
 
 `next build` `next start` の両方で環境変数を渡す必要があることに注意です。
-これは `NEXT_PUBLIC_` のついた環境変数が Webpack.DefinePlugin を用いてバンドル時に置換され、その他の環境変数はランタイムで `process.env` オブジェクトから解決されるためです。[^1]
+これはビルド時と起動時の両方で環境変数が必要になるからです。
+`NEXT_PUBLIC_` のついた環境変数はビルド時に Webpack.DefinePlugin を用いてバンドル時に置換され、その他の環境変数はランタイムで `process.env` オブジェクトから解決されるためです。[^1]
 
-[^1]: 気になる方は[こちらのコメント](https://zenn.dev/link/comments/f59cdfaa685581)を確認いただくと理解しやすいかも知れません。
+[^1]: 気になる方は[こちらのコメント](https://zenn.dev/link/comments/f59cdfaa685581)を確認いただくとイメージを掴んでいただけるかも知れません。
 
 :::details Windows の場合
 この記事で紹介するコマンドは sh 系のシェルでの動作を想定しているので、Windows では上記のコマンドは動作しないかも知れません。チームメンバーに Windows ユーザーがいる場合は次の対応を検討してみてください。
@@ -160,7 +153,7 @@ APP_ENV=staging yarn start
 
 環境変数を JSON または JavaScript で定義しているので TypeScript から型としてインポートできるようになります 🎉
 
-`env/types.d.ts` ファイルを作成するだけです！
+`env/types.d.ts` ファイルを作成するだけです。
 
 ```ts:env/types.d.ts
 type Env = Partial<Readonly<typeof import("./env.local.json")>>;
@@ -220,10 +213,11 @@ export const SomeComponent = () => {
     // string | undefined
     const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-    // undefined だったらランタイムエラーになる
+    // 中身が undefined だったらランタイムエラーになる
     assertIsDefined(apiBaseUrl);
 
-    // string 型であることが保証された
+    // 値が入っていることが保証された
+    // 型は string になっている
 
     fetch(`${apiBaseUrl}/register`, { method: "POST" });
   };
@@ -239,7 +233,7 @@ export const SomeComponent = () => {
 
 # テストを書く
 
-先ほどの assert の話にも通じるところですが、環境変数ファイルが多くなってくるとそれぞれでちゃんと定義されているか確認したいですよね？
+環境変数ファイルが多くなってくるとそれぞれでちゃんと定義されているか確認したくなる場合があるでしょう。
 Jest を使ってテストを書くことができます。
 
 :::message
@@ -277,6 +271,11 @@ env.local.json
    ✓ NEXT_PUBLIC_API_BASE_URL must be set (1 ms)
 ```
 
+このテストでは全ての環境変数ファイルで `NEXT_PUBLIC_API_BASE_URL` が定義されていることを確認します。
+
+ただこの時点のテストでは Vercel や AWS ECS などの管理コンソールから設定した環境変数のテストはできません。
+そう考えるとやはり先ほどの assert の対応の方が利便性が高いかと思います。
+
 # 同じような環境変数ファイルを動的に生成する
 
 dev の確認環境が 1 から 10 まであるとします。`env.dev-[1-10].js` を手動で作成・管理するのはつらいですよね。コピペしたことにより編集が漏れていたりするかも知れません。
@@ -286,7 +285,8 @@ dev の確認環境が 1 から 10 まであるとします。`env.dev-[1-10].js
 
 ```js:env/makeDevEnv.js
 module.exports = ({ env, SECRET_TOKEN }) => ({
-  NEXT_PUBLIC_API_BASE_URL: `https://dev-${env}.example.com`,
+  NEXT_PUBLIC_API_BASE_URL: `https://dev-${env}-api.example.com`,
+  NEXT_PUBLIC_CONTENTS_BASE_URL: `https://dev-${env}-contents.example.com`,
 
   SECRET_TOKEN,
 });
@@ -301,7 +301,8 @@ module.exports = require("./makeDevEnv")({
   SECRET_TOKEN: "my_secret_token_for_dev-1",
 });
 // {
-//   NEXT_PUBLIC_API_BASE_URL: 'https://dev-1.example.com',
+//   NEXT_PUBLIC_API_BASE_URL: 'https://dev-1-api.example.com',
+//   NEXT_PUBLIC_CONTENTS_BASE_URL: 'https://dev-1-contents.example.com',
 //   SECRET_TOKEN: 'my_secret_token_for_dev-1',
 // }
 ```
@@ -312,22 +313,23 @@ module.exports = require("./makeDevEnv")({
   SECRET_TOKEN: "my_secret_token_for_dev-2",
 });
 // {
-//   NEXT_PUBLIC_API_BASE_URL: 'https://dev-2.example.com',
+//   NEXT_PUBLIC_API_BASE_URL: 'https://dev-2-api.example.com',
+//   NEXT_PUBLIC_CONTENTS_BASE_URL: 'https://dev-2-contents.example.com',
 //   SECRET_TOKEN: 'my_secret_token_for_dev-2',
 // }
 ```
 
-これだけです。JS が使えるとなんでもできちゃいます。
+これだけです。JS が使えるとなんでもできてしまいます。
 しかし、なんでもできるからといって複雑に継承するようなテンプレート構造とかにしてしまうと剥がしたり分解したくなったときに大変です。
 シンプルさは意識しておいた方が良いです。
 
 # サンプルリポジトリ
 
-サンプルリポジトリを用意したので実際に手元で確認していただけます。
+ここまで紹介した内容のサンプルリポジトリを用意していますので実際に手元で確認していただけます。
 
 https://github.com/aku11i/nextjs-env-management-example
 
-環境変数機能を追加した差分はこちらです。（以降で紹介した設定をモリモリで実装しています）
+Next.js の初期状態から環境変数機能を追加した差分はこちらです。（紹介した設定をモリモリで実装しています）
 
 https://github.com/aku11i/nextjs-env-management-example/compare/9be2e76...main
 
