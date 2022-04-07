@@ -1,5 +1,5 @@
 ---
-title: "Next.jsで環境変数を使いこなすための記事"
+title: "Next.jsで環境変数（env）を使いこなすための記事"
 emoji: "🧑‍🔧"
 type: "tech"
 topics: ["nextjs", "nodejs", "typescript", "react", "javascript"]
