@@ -327,11 +327,7 @@ module.exports = require("./makeDevEnv")({
 
 ここまで紹介した内容のサンプルリポジトリを用意していますので実際に手元で確認していただけます。
 
-https://github.com/aku11i/nextjs-env-management-example
-
-Next.js の初期状態から環境変数機能を追加した差分はこちらです。（紹介した設定をモリモリで実装しています）
-
-https://github.com/aku11i/nextjs-env-management-example/compare/9be2e76...main
+https://github.com/aku11i/playground/tree/main/2022-04-nextjs-env-management-example
 
 # まとめ
 
